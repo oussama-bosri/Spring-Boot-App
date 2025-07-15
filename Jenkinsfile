@@ -44,3 +44,4 @@ pipeline {
         }
     }
 } 
+//This Jenkinsfile is used to build the Spring Boot application, build the Docker image, push it to Google Container Registry, and deploy it to a Swarm cluster.
