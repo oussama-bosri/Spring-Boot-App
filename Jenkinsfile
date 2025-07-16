@@ -3,7 +3,7 @@ pipeline {
     environment {
         GCP_KEY = credentials('gcp-artifact-key')
         DOCKER_IMAGE = 'us-central1-docker.pkg.dev/devops-465809/springboot-docker/hello-spring-boot:latest'
-        SWARM_MANAGER = 'swarmuser@SWARM_MANAGER_IP' // Replace with your Swarm manager user and IP
+        SWARM_MANAGER = 'swarmuser@SWARM_MANAGER_IP'
         SSH_CREDENTIALS = 'swarm-ssh'
     }
     stages {
@@ -44,4 +44,3 @@ pipeline {
         }
     }
 } 
-//This Jenkinsfile is used to build the Spring Boot application, build the Docker image, push it to Google Container Registry, and deploy it to a Swarm cluster.
