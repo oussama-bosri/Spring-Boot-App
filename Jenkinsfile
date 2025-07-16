@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn -f springboot-devops/pom.xml clean package -DskipTests'
             }
         }
         stage('Docker Build') {

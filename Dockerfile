@@ -1,8 +1,8 @@
 # Use Maven to build the app
 FROM maven:3.8.8-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY springboot-devops/pom.xml ./pom.xml
+COPY springboot-devops/src ./src
 RUN mvn clean package -DskipTests
 
 # Use a lightweight JRE to run the app
