@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  app:
+    image: us-central1-docker.pkg.dev/devops-465809/springboot-docker/hello-spring-boot:latest
+    ports:
+      - "8080:8080"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure 

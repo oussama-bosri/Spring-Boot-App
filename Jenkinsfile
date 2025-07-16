@@ -30,13 +30,22 @@ pipeline {
                 }
             }
         }
+        stage('Copy Stack File') {
+            steps {
+                sshagent([SSH_CREDENTIALS]) {
+                    sh """
+                    scp -o StrictHostKeyChecking=no docker-stack.yml ${SWARM_MANAGER}:/home/swarmuser/docker-stack.yml
+                    """
+                }
+            }
+        }
         stage('Deploy to Swarm') {
             steps {
                 sshagent([SSH_CREDENTIALS]) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ${SWARM_MANAGER} '
                         docker pull ${DOCKER_IMAGE} &&
-                        docker stack deploy -c /path/to/docker-stack.yml mystack
+                        docker stack deploy -c /home/swarmuser/docker-stack.yml mystack
                     '
                     """
                 }
