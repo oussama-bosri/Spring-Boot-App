@@ -3,7 +3,7 @@ pipeline {
     environment {
         GCP_KEY = credentials('gcp-artifact-key')
         DOCKER_IMAGE = 'us-central1-docker.pkg.dev/devops-465809/springboot-docker/hello-spring-boot:latest'
-        SWARM_MANAGER = 'swarmuser@SWARM_MANAGER_IP'
+        SWARM_MANAGER = "swarmuser@${env.SWARM_MANAGER_IP}"
         SSH_CREDENTIALS = 'swarm-ssh'
     }
     stages {
