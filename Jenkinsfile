@@ -5,8 +5,24 @@ pipeline {
         DOCKER_IMAGE = 'us-central1-docker.pkg.dev/devops-465809/springboot-docker/hello-spring-boot:latest'
         SWARM_MANAGER = "swarmuser@${env.SWARM_MANAGER_IP}"
         SSH_CREDENTIALS = 'swarm-ssh'
+        SONAR_TOKEN = credentials('sonar-token')
     }
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                sh """
+                    sonar-scanner \
+                      -Dsonar.projectKey=springboot-devops \
+                      -Dsonar.host.url=http://<jenkins-vm-public-ip>:9000 \
+                      -Dsonar.login=$SONAR_TOKEN
+                """
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -f springboot-devops/pom.xml clean package -DskipTests'
