@@ -19,6 +19,17 @@ pipeline {
                 }
             }
         }
+        stage('Trivy Scan') {
+            steps {
+                script {
+                    sh '''
+                        trivy image --format table --output trivy-report.txt ${DOCKER_IMAGE}
+                        trivy image --exit-code 1 --severity HIGH,CRITICAL ${DOCKER_IMAGE}
+                    '''
+                    archiveArtifacts artifacts: 'trivy-report.txt', allowEmptyArchive: true
+                }
+            }
+        }
         stage('Docker Auth & Push') {
             steps {
                 withCredentials([file(credentialsId: 'gcp-artifact-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
